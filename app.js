@@ -14,6 +14,10 @@ const output = document.createElement('div');
 document.body.appendChild(output);
 document.querySelector('.container').appendChild(output);
 
+function outputPlanets(data) {
+
+}
+
 function fetchData(url) {
     fetch(url).then(function(res) {
         return res.json()
@@ -28,6 +32,10 @@ function fetchData(url) {
                 fetchData(data.next);
             });
         }
-        console.log(data);
+        const planets = data.results.map(function(item){
+            console.log(item);
+            return {name:item.name, films:item.films};
+        })
+        console.log(planets);
     })
 }
