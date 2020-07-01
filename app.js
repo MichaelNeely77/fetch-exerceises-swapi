@@ -8,8 +8,27 @@ button.setAttribute('class', 'btn btn-primary')
 document.querySelector('.container').appendChild(button);
 
 button.addEventListener('click', function() {
-    fetchData('https://swapi.dev/api/planets');
+    fetchAll('https://swapi.dev/api/planets').then(function(planets){
+        outputPlanets(planets);
+    })
 });
+
+function fetchAll(url, planets) {
+    return new Promise(function(resolve, reject) {
+        return fetch(url).then(function(res){
+            return res.json()
+    }).then(function(data){
+        planets = data.results.map(function(item){
+            console.log(item);
+            return {name:item.name, films:item.films};
+            })
+            resolve(planets);
+        })
+    });
+}
+
+
+
 const output = document.createElement('div');
 document.body.appendChild(output);
 document.querySelector('.container').appendChild(output);
@@ -57,5 +76,7 @@ function fetchData(url) {
             return {name:item.name, films:item.films};
         })
         outputPlanets(planets);
-    })
+    });
+
+
 }
