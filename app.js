@@ -15,7 +15,27 @@ document.body.appendChild(output);
 document.querySelector('.container').appendChild(output);
 
 function outputPlanets(data) {
+    data.forEach(function(item) {
+        console.log(item);
+        const div = document.createElement('div');
+        div.textContent = item.name;
+        const ul = document.createElement('ul');
+        ul.setAttribute('class', 'list-group')
 
+
+        for(let x = 0; x < item.films.length; x++) {
+            let li = document.createElement('li');
+            li.setAttribute('class', 'list-group-item')
+
+            li.textContent = item.films[x];
+            ul.appendChild(li);
+            
+
+        }
+        div.appendChild(ul);
+        output.appendChild(div);
+    });
+    
 }
 
 function fetchData(url) {
@@ -36,6 +56,6 @@ function fetchData(url) {
             console.log(item);
             return {name:item.name, films:item.films};
         })
-        console.log(planets);
+        outputPlanets(planets);
     })
 }
